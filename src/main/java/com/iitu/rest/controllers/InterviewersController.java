@@ -1,10 +1,13 @@
 package com.iitu.rest.controllers;
 
 import com.iitu.entities.Interviewers;
+import com.iitu.entities.Statuses;
 import com.iitu.repositories.InterviewersRepository;
+import com.iitu.repositories.StatusesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +27,9 @@ public class InterviewersController {
     @Autowired
     InterviewersRepository interviewersRepository;
 
+    @Autowired
+    StatusesRepository statusesRepository;
+
     @GetMapping(path = "/interviewers", produces = "application/json")
     @ResponseBody
     public ResponseEntity getAll(){
@@ -40,7 +46,7 @@ public class InterviewersController {
         Interviewers interviewer = interviewersRepository.findById(id).get();
         if (interviewer== null) {
             System.out.println("User with id " + id + " not found");
-            return new ResponseEntity<Interviewers>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("interviewer not found");
         }
         return new ResponseEntity<Interviewers>(interviewer, HttpStatus.OK);
     }
@@ -50,14 +56,34 @@ public class InterviewersController {
             @RequestParam(value = "firstName") String firstName,
             @RequestParam(value = "lastName") String lastName ,
             @RequestParam(value = "middleName") String middleName,
-            @RequestParam(value="birthDate")     @DateTimeFormat(pattern="yyyy-MM-dd") Date birthDate){
+            @RequestParam(value = "birthDate")     @DateTimeFormat(pattern="yyyy-MM-dd") Date birthDate,
+            @RequestParam(value = "statusId", required = false) Long statusId
+    ){
         Interviewers interviewer = new Interviewers();
         interviewer.setFirstName(firstName);
         interviewer.setLastName(lastName);
         interviewer.setMiddleName(middleName);
         interviewer.setBirthDate(birthDate);
+        if(statusId!=null){
+            Optional<Statuses> statusesOptional = statusesRepository.findById(statusId);
+            if(!statusesOptional.isPresent()){
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Status not found");
+            }
+            interviewer.setStatus(statusesOptional.get());
+        }
         interviewersRepository.saveAndFlush(interviewer);
-        return new ResponseEntity(interviewer, HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body(interviewer);
+    }
+
+    @PostMapping(path = "/interviewers/test",
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE,
+            produces = {MediaType.APPLICATION_ATOM_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
+    public @ResponseBody ResponseEntity addTest(
+            @RequestBody Interviewers interviewer
+    ){
+//        interviewersRepository.saveAndFlush(interviewer);
+        System.out.println(interviewer);
+        return ResponseEntity.status(HttpStatus.CREATED).body(interviewer);
     }
 
 
@@ -65,7 +91,7 @@ public class InterviewersController {
     public ResponseEntity delete(@PathVariable Long id){
         Optional <Interviewers>interviewersOptional = interviewersRepository.findById(id);
         if(!interviewersOptional.isPresent()){
-            return new ResponseEntity<Interviewers>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("interviewer not found");
         }
         interviewersRepository.delete(interviewersOptional.get());
         interviewersRepository.flush();
@@ -82,7 +108,7 @@ public class InterviewersController {
 
         Optional<Interviewers> interviewersOptional = interviewersRepository.findById(id);
         if(!interviewersOptional.isPresent()){
-            return new ResponseEntity<Interviewers>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("interviewer not found");
         }
         Interviewers interviewer = interviewersOptional.get();
         interviewer.setFirstName(firstName != null ? firstName : interviewer.getFirstName());

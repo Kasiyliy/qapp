@@ -13,6 +13,12 @@ import java.util.Date;
  */
 @Entity
 @Table(name="interviewees")
+@SequenceGenerator(
+        name = "seq",
+        sequenceName = "s_interviewees",
+        initialValue = 1,
+        allocationSize=1
+)
 public class Interviewees extends Users{
 
     public Interviewees() {

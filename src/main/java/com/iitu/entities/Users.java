@@ -13,12 +13,6 @@ import java.util.Date;
  * @project qapp
  */
 @MappedSuperclass
-@SequenceGenerator(
-        name = "seq",
-        sequenceName = "s_users",
-        initialValue = 1,
-        allocationSize=1
-)
 public class Users extends AuditModel implements Serializable{
 
     public Users(@NotBlank @Size(min = 3, max = 100) String firstName, @NotBlank @Size(min = 3, max = 100) String lastName, @Size(min = 3, max = 100) String middleName, Date birthDate) {

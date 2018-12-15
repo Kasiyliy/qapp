@@ -14,6 +14,12 @@ import java.util.Date;
 
 @Entity
 @Table(name = "interviewers")
+@SequenceGenerator(
+        name = "seq",
+        sequenceName = "s_interviewers",
+        initialValue = 1,
+        allocationSize=1
+)
 public class Interviewers extends Users {
 
     public Interviewers(String firstName, @NotBlank @Size(min = 3, max = 100) String lastName, @Size(min = 3, max = 100) String middleName, Date birthDate, Statuses status) {
