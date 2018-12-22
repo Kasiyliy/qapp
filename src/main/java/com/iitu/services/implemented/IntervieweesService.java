@@ -4,7 +4,9 @@ import com.iitu.entities.Interviewees;
 import com.iitu.repositories.IntervieweesRepository;
 import com.iitu.services.GenericService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -12,9 +14,9 @@ import java.util.Optional;
  * on 15.12.2018
  * @project qapp
  */
+@Service
 public class IntervieweesService implements GenericService<Interviewees>{
 
-    @Autowired
     private IntervieweesRepository intervieweesRepository;
 
     @Override
@@ -49,5 +51,19 @@ public class IntervieweesService implements GenericService<Interviewees>{
             return true;
         }
         return false;
+    }
+
+    @Override
+    public List<Interviewees> getAll() {
+        return intervieweesRepository.findAll();
+    }
+
+    public IntervieweesRepository getIntervieweesRepository() {
+        return intervieweesRepository;
+    }
+
+    @Autowired
+    public void setIntervieweesRepository(IntervieweesRepository intervieweesRepository) {
+        this.intervieweesRepository = intervieweesRepository;
     }
 }

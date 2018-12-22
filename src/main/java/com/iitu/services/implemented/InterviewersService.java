@@ -6,6 +6,7 @@ import com.iitu.services.GenericService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -16,7 +17,7 @@ import java.util.Optional;
 @Service
 public class InterviewersService implements GenericService<Interviewers> {
 
-    @Autowired
+
     private InterviewersRepository interviewersRepository;
 
     public void create(Interviewers interviewer){
@@ -35,9 +36,8 @@ public class InterviewersService implements GenericService<Interviewers> {
         Optional<Interviewers> interviewersOptional = interviewersRepository.findById(id);
         if(interviewersOptional.isPresent()){
             return interviewersOptional.get();
-        }else{
-            return null;
         }
+        return null;
     }
 
     public boolean delete(Long id){
@@ -47,5 +47,19 @@ public class InterviewersService implements GenericService<Interviewers> {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public List<Interviewers> getAll() {
+        return interviewersRepository.findAll();
+    }
+
+    public InterviewersRepository getInterviewersRepository() {
+        return interviewersRepository;
+    }
+
+    @Autowired
+    public void setInterviewersRepository(InterviewersRepository interviewersRepository) {
+        this.interviewersRepository = interviewersRepository;
     }
 }

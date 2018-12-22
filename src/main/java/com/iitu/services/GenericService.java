@@ -3,6 +3,8 @@ package com.iitu.services;
 
 import com.iitu.entities.AuditModel;
 
+import java.util.List;
+
 /**
  * @author Assylkhan
  * on 14.12.2018
@@ -18,4 +20,5 @@ public interface GenericService<T extends AuditModel> {
 
     public boolean delete(Long id);
 
+    public List<T> getAll();
 }
