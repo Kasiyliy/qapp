@@ -2,6 +2,7 @@ package com.iitu.entities;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.Date;
@@ -22,6 +23,8 @@ import java.util.Date;
 )
 public class Interviews extends Users {
 
+
+
     public Interviews(@NotBlank @Size(min = 3, max = 100) String firstName, @NotBlank @Size(min = 3, max = 100) String lastName, @Size(min = 3, max = 100) String middleName, Date birthDate, Interviewers interviewer, Interviewees interviewee, Weeks week, Times times) {
         super(firstName, lastName, middleName, birthDate);
         this.interviewer = interviewer;
@@ -35,18 +38,22 @@ public class Interviews extends Users {
 
     @ManyToOne
     @JoinColumn(name = "interviewer_id")
+    @NotNull
     private Interviewers interviewer;
 
     @ManyToOne
     @JoinColumn(name = "interviewee_id")
+    @NotNull
     private Interviewees interviewee;
 
     @ManyToOne
     @JoinColumn(name = "week_id")
+    @NotNull
     private Weeks week;
 
     @ManyToOne
     @JoinColumn(name = "time_id")
+    @NotNull
     private Times times;
 
     public Interviewers getInterviewer() {

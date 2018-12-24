@@ -1,6 +1,7 @@
 package com.iitu.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author Assylkhan
@@ -18,17 +19,28 @@ import javax.persistence.*;
 )
 public class BusyTimes extends AuditModel{
 
+    public BusyTimes() {
+    }
+
+    public BusyTimes(@NotNull Weeks week, @NotNull Times times, @NotNull Interviewers interviewer) {
+        this.week = week;
+        this.times = times;
+        this.interviewer = interviewer;
+    }
 
     @ManyToOne
     @JoinColumn(name = "week_id")
+    @NotNull
     private Weeks week;
 
     @ManyToOne
     @JoinColumn(name = "time_id")
+    @NotNull
     private Times times;
 
     @ManyToOne
     @JoinColumn(name = "interviewer_id")
+    @NotNull
     private Interviewers interviewer;
 
     public Weeks getWeek() {

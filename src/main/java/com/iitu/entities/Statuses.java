@@ -1,6 +1,7 @@
 package com.iitu.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author Assylkhan
@@ -17,7 +18,15 @@ import javax.persistence.*;
 )
 public class Statuses extends AuditModel {
 
+    public Statuses() {
+    }
+
+    public Statuses(@NotNull String name) {
+        this.name = name;
+    }
+
     @Column(name = "name")
+    @NotNull
     private String name;
 
     public String getName() {

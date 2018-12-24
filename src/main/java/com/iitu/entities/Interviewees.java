@@ -2,6 +2,7 @@ package com.iitu.entities;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.Date;
@@ -31,6 +32,7 @@ public class Interviewees extends Users{
     }
 
     @OneToOne(mappedBy = "interviewee")
+    @NotNull
     private IntervieweeDocuments intervieweeDocument;
 
     @Column(name = "school_name")

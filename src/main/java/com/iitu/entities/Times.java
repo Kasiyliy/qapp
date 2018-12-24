@@ -1,6 +1,7 @@
 package com.iitu.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author Assylkhan
@@ -18,8 +19,15 @@ import javax.persistence.*;
 )
 public class Times extends AuditModel{
 
+    public Times() {
+    }
+
+    public Times(@NotNull String value) {
+        this.value = value;
+    }
 
     @Column(name = "value")
+    @NotNull
     private String value;
 
     public String getValue() {

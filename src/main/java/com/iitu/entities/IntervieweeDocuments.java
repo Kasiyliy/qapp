@@ -20,8 +20,22 @@ import java.time.LocalDate;
 )
 public class IntervieweeDocuments extends AuditModel {
 
+    public IntervieweeDocuments() {
+    }
+
+    public IntervieweeDocuments(Interviewees interviewee, @NotNull int iin, String birthPlace, String nationality, String issuer, LocalDate issueDate, LocalDate validityDate) {
+        this.interviewee = interviewee;
+        this.iin = iin;
+        this.birthPlace = birthPlace;
+        this.nationality = nationality;
+        this.issuer = issuer;
+        this.issueDate = issueDate;
+        this.validityDate = validityDate;
+    }
+
     @OneToOne
     @JoinColumn(name = "interviewee_id")
+    @NotNull
     private Interviewees interviewee;
 
     @NotNull

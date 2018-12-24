@@ -15,6 +15,8 @@ import java.util.Date;
 @MappedSuperclass
 public class Users extends AuditModel implements Serializable{
 
+
+
     public Users(@NotBlank @Size(min = 3, max = 100) String firstName, @NotBlank @Size(min = 3, max = 100) String lastName, @Size(min = 3, max = 100) String middleName, Date birthDate) {
         this.firstName = firstName;
         this.lastName = lastName;

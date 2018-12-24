@@ -2,6 +2,7 @@ package com.iitu.entities;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.Date;
@@ -32,6 +33,7 @@ public class Interviewers extends Users {
 
     @ManyToOne
     @JoinColumn(name = "status_id")
+    @NotNull
     private Statuses status;
 
 

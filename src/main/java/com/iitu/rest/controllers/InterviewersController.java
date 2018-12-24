@@ -4,6 +4,7 @@ import com.iitu.entities.Interviewers;
 import com.iitu.entities.Statuses;
 import com.iitu.services.implemented.InterviewersService;
 import com.iitu.services.implemented.StatusesService;
+import com.iitu.utils.MessageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -11,9 +12,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @author Assylkhan
@@ -43,41 +44,15 @@ public class InterviewersController {
         Interviewers interviewer = interviewersService.getById(id);
         if (interviewer== null) {
             System.out.println("User with id " + id + " not found");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("interviewer not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(MessageUtils.getMessageJSON(HttpStatus.NOT_FOUND.getReasonPhrase()));
         }
-        return new ResponseEntity<Interviewers>(interviewer, HttpStatus.OK);
+        return new ResponseEntity<>(interviewer, HttpStatus.OK);
     }
 
-    @PostMapping(path = "/interviewers", produces = "application/json")
-    public @ResponseBody ResponseEntity add(
-            @RequestParam(value = "firstName") String firstName,
-            @RequestParam(value = "lastName") String lastName ,
-            @RequestParam(value = "middleName") String middleName,
-            @RequestParam(value = "birthDate")     @DateTimeFormat(pattern="yyyy-MM-dd") Date birthDate,
-            @RequestParam(value = "statusId", required = false) Long statusId
-    ){
-        Interviewers interviewer = new Interviewers();
-        interviewer.setFirstName(firstName);
-        interviewer.setLastName(lastName);
-        interviewer.setMiddleName(middleName);
-        interviewer.setBirthDate(birthDate);
-        if(statusId!=null){
-            Statuses statuses = statusesService.getById(statusId);
-            if(statuses!=null){
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Status not found");
-            }
-            interviewer.setStatus(statuses);
-        }
+
+    @PostMapping(path = "/interviewers")
+    public ResponseEntity add(@RequestBody  @Valid Interviewers interviewer){
         interviewersService.create(interviewer);
-        return ResponseEntity.status(HttpStatus.CREATED).body(interviewer);
-    }
-
-    @PostMapping(path = "/interviewers/test",
-            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE,
-            produces = {MediaType.APPLICATION_ATOM_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
-    public @ResponseBody ResponseEntity addTest(@RequestBody Interviewers interviewer){
-//        interviewersService.saveAndFlush(interviewer);
-        System.out.println(interviewer);
         return ResponseEntity.status(HttpStatus.CREATED).body(interviewer);
     }
 
@@ -86,10 +61,10 @@ public class InterviewersController {
     public ResponseEntity delete(@PathVariable Long id){
         Interviewers interviewers= interviewersService.getById(id);
         if(interviewers != null){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("interviewer not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(MessageUtils.getMessageJSON(HttpStatus.NOT_FOUND.getReasonPhrase()));
         }
         interviewersService.delete(interviewers.getId());
-        return new ResponseEntity<Interviewers>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping(path = "/interviewers", produces = "application/json")
@@ -102,14 +77,14 @@ public class InterviewersController {
 
         Interviewers interviewer = interviewersService.getById(id);
         if(interviewer != null){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("interviewer not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(MessageUtils.getMessageJSON(HttpStatus.NOT_FOUND.getReasonPhrase()));
         }
         interviewer.setFirstName(firstName != null ? firstName : interviewer.getFirstName());
         interviewer.setLastName(lastName != null ? lastName : interviewer.getLastName());
         interviewer.setMiddleName(middleName != null ? middleName : interviewer.getMiddleName());
         interviewer.setBirthDate(birthDate != null ? birthDate : interviewer.getBirthDate());
         interviewersService.update(interviewer);
-        return new ResponseEntity<Interviewers>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     public InterviewersService getInterviewersService() {
