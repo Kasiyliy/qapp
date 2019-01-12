@@ -63,14 +63,12 @@ public class TimesController {
 
     @PutMapping(path = "/times", produces = "application/json")
     public ResponseEntity update(
-            @RequestParam(value = "id") Long id ,
             @RequestBody Times time){
 
-        Times tempTime = timesService.getById(id);
+        Times tempTime = timesService.getById(time.getId());
         if(tempTime == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(MessageUtils.getMessageJSON(HttpStatus.NOT_FOUND.getReasonPhrase()));
         }
-        time.setId(tempTime.getId());
         timesService.update(time);
         return new ResponseEntity(HttpStatus.OK);
     }

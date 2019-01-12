@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Date;
 import java.util.List;
 
@@ -67,15 +68,13 @@ public class StatusesController {
 
     @PutMapping(path = "/statuses", produces = "application/json")
     public ResponseEntity update(
-            @RequestParam(value = "id") Long id ,
-            @RequestParam(value = "name", required = true) String name){
+            @RequestBody @Valid Statuses statuses) {
 
-        Statuses status = statusesService.getById(id);
+        Statuses status = statusesService.getById(statuses.getId());
         if(status == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(MessageUtils.getMessageJSON(HttpStatus.NOT_FOUND.getReasonPhrase()));
         }
-        status.setName(name);
-        statusesService.update(status);
+        statusesService.update(statuses);
         return new ResponseEntity(HttpStatus.OK);
     }
 

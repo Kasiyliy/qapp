@@ -70,20 +70,12 @@ public class InterviewersController {
 
     @PutMapping(path = "/interviewers", produces = "application/json")
     public ResponseEntity update(
-            @RequestParam(value = "id") Long id ,
-            @RequestParam(value = "firstName", required = false) String firstName,
-            @RequestParam(value = "lastName", required = false) String lastName ,
-            @RequestParam(value = "middleName", required = false) String middleName,
-            @RequestParam(value="birthDate",required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date birthDate){
+            @RequestBody @Valid Interviewers interviewer){
 
-        Interviewers interviewer = interviewersService.getById(id);
-        if(interviewer == null){
+        Interviewers interviewer1 = interviewersService.getById(interviewer.getId());
+        if(interviewer1 == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(MessageUtils.getMessageJSON(HttpStatus.NOT_FOUND.getReasonPhrase()));
         }
-        interviewer.setFirstName(firstName != null ? firstName : interviewer.getFirstName());
-        interviewer.setLastName(lastName != null ? lastName : interviewer.getLastName());
-        interviewer.setMiddleName(middleName != null ? middleName : interviewer.getMiddleName());
-        interviewer.setBirthDate(birthDate != null ? birthDate : interviewer.getBirthDate());
         interviewersService.update(interviewer);
         return new ResponseEntity<>(HttpStatus.OK);
     }

@@ -64,13 +64,12 @@ public class IntervieweesController {
 
     @PutMapping(path = "/interviewees", produces = "application/json")
     public ResponseEntity update(
-            @RequestParam(value = "id") Long id ,@RequestBody @Valid Interviewees interviewee){
+            @RequestBody @Valid Interviewees interviewee){
 
-        Interviewees tempInterviewee = intervieweesService.getById(id);
+        Interviewees tempInterviewee = intervieweesService.getById(interviewee.getId());
         if(tempInterviewee == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(MessageUtils.getMessageJSON(HttpStatus.NOT_FOUND.getReasonPhrase()));
         }
-        interviewee.setId(id);
         intervieweesService.update(interviewee);
         return new ResponseEntity<>(HttpStatus.OK);
     }

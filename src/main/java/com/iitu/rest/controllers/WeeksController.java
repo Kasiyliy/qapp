@@ -63,14 +63,12 @@ public class WeeksController {
 
     @PutMapping(path = "/weeks", produces = "application/json")
     public ResponseEntity update(
-            @RequestParam(value = "id") Long id ,
             @RequestBody Weeks week){
 
-        Weeks tempWeek = weeksService.getById(id);
+        Weeks tempWeek = weeksService.getById(week.getId());
         if(tempWeek == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(MessageUtils.getMessageJSON(HttpStatus.NOT_FOUND.getReasonPhrase()));
         }
-        week.setId(tempWeek.getId());
         weeksService.update(week);
         return new ResponseEntity(HttpStatus.OK);
     }
