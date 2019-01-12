@@ -17,6 +17,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(path = "/api")
+@CrossOrigin(origins = "*")
 public class TimesController {
 
     private TimesService timesService;
@@ -53,7 +54,7 @@ public class TimesController {
     @DeleteMapping(path = "/times/{id}", produces = "application/json")
     public ResponseEntity delete(@PathVariable Long id){
         Times time = timesService.getById(id);
-        if(time != null){
+        if(time == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(MessageUtils.getMessageJSON(HttpStatus.NOT_FOUND.getReasonPhrase()));
         }
         timesService.delete(time.getId());

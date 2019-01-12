@@ -18,6 +18,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(path = "/api")
+@CrossOrigin(origins = "*")
 public class IntervieweesController {
 
     private IntervieweesService intervieweesService;

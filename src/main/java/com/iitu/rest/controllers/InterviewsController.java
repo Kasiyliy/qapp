@@ -18,6 +18,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(path = "/api")
+@CrossOrigin(origins = "*")
 public class InterviewsController {
 
     private InterviewsService interviewsService;
@@ -54,7 +55,7 @@ public class InterviewsController {
     @DeleteMapping(path = "/interviews/{id}", produces = "application/json")
     public ResponseEntity delete(@PathVariable Long id){
         Interviews interview= interviewsService.getById(id);
-        if(interview != null){
+        if(interview == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(MessageUtils.getMessageJSON(HttpStatus.NOT_FOUND.getReasonPhrase()));
         }
         interviewsService.delete(interview.getId());

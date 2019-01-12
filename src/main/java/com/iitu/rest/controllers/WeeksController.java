@@ -17,6 +17,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(path = "/api")
+@CrossOrigin(origins = "*")
 public class WeeksController {
 
     private WeeksService weeksService;
