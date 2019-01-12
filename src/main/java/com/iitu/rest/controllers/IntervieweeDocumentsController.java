@@ -66,7 +66,7 @@ public class IntervieweeDocumentsController {
             @RequestParam(value = "id") Long id ,@RequestBody @Valid IntervieweeDocuments intervieweeDocument){
 
         IntervieweeDocuments tempIntervieweeDocuments = intervieweeDocumentsService.getById(id);
-        if(tempIntervieweeDocuments  != null){
+        if(tempIntervieweeDocuments  == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(MessageUtils.getMessageJSON(HttpStatus.NOT_FOUND.getReasonPhrase()));
         }
         intervieweeDocument.setId(id);

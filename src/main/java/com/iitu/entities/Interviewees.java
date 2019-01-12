@@ -32,7 +32,6 @@ public class Interviewees extends Users{
     }
 
     @OneToOne(mappedBy = "interviewee")
-    @NotNull
     private IntervieweeDocuments intervieweeDocument;
 
     @Column(name = "school_name")

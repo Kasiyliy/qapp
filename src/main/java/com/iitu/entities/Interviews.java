@@ -56,6 +56,11 @@ public class Interviews extends Users {
     @NotNull
     private Times times;
 
+    @NotNull
+    @Column(name = "exact_day")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date exactDay = new Date();
+
     public Interviewers getInterviewer() {
         return interviewer;
     }
@@ -86,5 +91,13 @@ public class Interviews extends Users {
 
     public void setTimes(Times times) {
         this.times = times;
+    }
+
+    public Date getExactDay() {
+        return exactDay;
+    }
+
+    public void setExactDay(Date exactDay) {
+        this.exactDay = exactDay;
     }
 }

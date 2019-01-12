@@ -76,7 +76,7 @@ public class InterviewersController {
             @RequestParam(value="birthDate",required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date birthDate){
 
         Interviewers interviewer = interviewersService.getById(id);
-        if(interviewer != null){
+        if(interviewer == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(MessageUtils.getMessageJSON(HttpStatus.NOT_FOUND.getReasonPhrase()));
         }
         interviewer.setFirstName(firstName != null ? firstName : interviewer.getFirstName());

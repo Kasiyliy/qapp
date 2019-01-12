@@ -66,7 +66,7 @@ public class IntervieweesController {
             @RequestParam(value = "id") Long id ,@RequestBody @Valid Interviewees interviewee){
 
         Interviewees tempInterviewee = intervieweesService.getById(id);
-        if(tempInterviewee != null){
+        if(tempInterviewee == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(MessageUtils.getMessageJSON(HttpStatus.NOT_FOUND.getReasonPhrase()));
         }
         interviewee.setId(id);

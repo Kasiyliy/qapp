@@ -70,7 +70,7 @@ public class StatusesController {
             @RequestParam(value = "name", required = true) String name){
 
         Statuses status = statusesService.getById(id);
-        if(status != null){
+        if(status == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(MessageUtils.getMessageJSON(HttpStatus.NOT_FOUND.getReasonPhrase()));
         }
         status.setName(name);

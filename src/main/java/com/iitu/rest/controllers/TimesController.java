@@ -66,7 +66,7 @@ public class TimesController {
             @RequestBody Times time){
 
         Times tempTime = timesService.getById(id);
-        if(tempTime != null){
+        if(tempTime == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(MessageUtils.getMessageJSON(HttpStatus.NOT_FOUND.getReasonPhrase()));
         }
         time.setId(tempTime.getId());

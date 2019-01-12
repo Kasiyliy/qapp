@@ -66,7 +66,7 @@ public class WeeksController {
             @RequestBody Weeks week){
 
         Weeks tempWeek = weeksService.getById(id);
-        if(tempWeek != null){
+        if(tempWeek == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(MessageUtils.getMessageJSON(HttpStatus.NOT_FOUND.getReasonPhrase()));
         }
         week.setId(tempWeek.getId());
