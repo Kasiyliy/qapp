@@ -71,7 +71,7 @@ public class IntervieweeDocumentsController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(MessageUtils.getMessageJSON(HttpStatus.NOT_FOUND.getReasonPhrase()));
         }
         intervieweeDocumentsService.update(intervieweeDocument);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.CREATED).body(intervieweeDocument);
     }
 
     @Autowired

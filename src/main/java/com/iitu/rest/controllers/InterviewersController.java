@@ -47,7 +47,7 @@ public class InterviewersController {
             System.out.println("User with id " + id + " not found");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(MessageUtils.getMessageJSON(HttpStatus.NOT_FOUND.getReasonPhrase()));
         }
-        return new ResponseEntity<>(interviewer, HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.CREATED).body(interviewer);
     }
 
 

@@ -70,7 +70,7 @@ public class TimesController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(MessageUtils.getMessageJSON(HttpStatus.NOT_FOUND.getReasonPhrase()));
         }
         timesService.update(time);
-        return new ResponseEntity(HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.CREATED).body(time);
     }
 
     public TimesService getTimesService() {

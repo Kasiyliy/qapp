@@ -43,7 +43,6 @@ public class Users extends AuditModel implements Serializable{
 
     @Column(name = "birth_date")
     @Temporal(TemporalType.DATE)
-    @NotBlank
     private Date birthDate;
 
     public String getFirstName() {
