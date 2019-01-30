@@ -41,7 +41,7 @@ public class StatusesController {
     @ResponseBody
     public ResponseEntity get(@PathVariable Long id){
         Statuses status = statusesService.getById(id);
-        if (status== null) {
+        if (status == null) {
             System.out.println("Status with id " + id + " not found");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(MessageUtils.getMessageJSON(HttpStatus.NOT_FOUND.getReasonPhrase()));
         }
@@ -59,7 +59,7 @@ public class StatusesController {
     @DeleteMapping(path = "/statuses/{id}", produces = "application/json")
     public ResponseEntity delete(@PathVariable Long id){
         Statuses status = statusesService.getById(id);
-        if(status != null){
+        if(status == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(MessageUtils.getMessageJSON(HttpStatus.NOT_FOUND.getReasonPhrase()));
         }
         statusesService.delete(status.getId());

@@ -54,7 +54,7 @@ public class WeeksController {
     @DeleteMapping(path = "/weeks/{id}", produces = "application/json")
     public ResponseEntity delete(@PathVariable Long id){
         Weeks week = weeksService.getById(id);
-        if(week != null){
+        if(week == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(MessageUtils.getMessageJSON(HttpStatus.NOT_FOUND.getReasonPhrase()));
         }
         weeksService.delete(week.getId());
