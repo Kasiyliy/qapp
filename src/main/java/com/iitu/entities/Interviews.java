@@ -21,17 +21,8 @@ import java.util.Date;
         initialValue = 1,
         allocationSize=1
 )
-public class Interviews extends Users {
+public class Interviews extends AuditModel{
 
-
-
-    public Interviews(@NotBlank @Size(min = 3, max = 100) String firstName, @NotBlank @Size(min = 3, max = 100) String lastName, @Size(min = 3, max = 100) String middleName, Date birthDate, Interviewers interviewer, Interviewees interviewee, Weeks week, Times times) {
-        super(firstName, lastName, middleName, birthDate);
-        this.interviewer = interviewer;
-        this.interviewee = interviewee;
-        this.week = week;
-        this.times = times;
-    }
 
     public Interviews(){
     }

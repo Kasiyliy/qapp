@@ -22,16 +22,17 @@ import java.time.LocalDate;
 @SpringBootApplication
 
 //FOR DEPLOYMENT
-//public class App  extends SpringBootServletInitializer{
-public class App  {
+public class App  extends SpringBootServletInitializer{
+//public class App  {
     private static final Logger log = LoggerFactory.getLogger(App.class);
 
     public static void main(String[] args) {
         SpringApplication.run(App.class, args);
     }
 //FOR DEPLOYMENT
-//    @Override
-//    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-//        return application.sources(App.class);
-//    }
+
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(App.class);
+    }
 }
